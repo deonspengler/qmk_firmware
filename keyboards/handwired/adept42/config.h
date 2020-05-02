@@ -5,7 +5,7 @@
 #define PRODUCT_ID      0x4201
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Deon Spengler
-#define PRODUCT         Adept 42
+#define PRODUCT         Adept42
 #define DESCRIPTION     A 42 key ortholinear, column staggered split keyboard
 
 /* Key matrix size */

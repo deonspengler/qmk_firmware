@@ -19,8 +19,11 @@
 /* Diode direction (COL2ROW or ROW2COL) */
 #define DIODE_DIRECTION COL2ROW
 
+/* Configure serial communication for the split keyboard */
+#define SOFT_SERIAL_PIN D2
+
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
 #define DEBOUNCE 5
 
-/* Configure serial communication for the split keyboard */
-#define SOFT_SERIAL_PIN D2
+/* Set the maximum time allowed between taps */
+#define TAPPING_TERM 175

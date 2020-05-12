@@ -1,19 +1,17 @@
 #include "adept42.h"
 
-
 #define _QWERTY 0
 #define _L1 1
 #define _L2 2
 
 enum {
-  TD_SHIFT_CAPS = 0
+    TD_SHIFT_CAPS = 0
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-  //Tap once for Shift, twice for Caps Lock
-  [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS)
+    //Tap once for Shift, twice for Caps Lock
+    [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS)
 };
-
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
@@ -80,19 +78,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+
+#ifdef OLED_DRIVER_ENABLE
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
-  if (is_keyboard_master()) {
-    return OLED_ROTATION_270;
-  }
-  return rotation;
+    if (is_keyboard_master()) {
+        return OLED_ROTATION_270;
+    }
+    return rotation;
 }
 
 void oled_task_user(void) {
-  if (is_keyboard_master()) {
+    // led status, (Caps Lock)
     uint8_t led_state = host_keyboard_leds();
-    oled_write_ln_P(led_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("\nCPSLK") : PSTR("     "), false);
-  }
+
+    if (led_state & (1<<USB_LED_CAPS_LOCK)) {
+        oled_write_ln_P(PSTR("\nCPSLK"), true);
+    } else {
+        oled_write_ln_P(PSTR("\nCPSLK"), false);
+    }
+
+    // show layer information
+    oled_write_P(PSTR("\nLYR: "), false);
+
+    if (is_keyboard_master()) {
+        switch (get_highest_layer(layer_state)) {
+            case _QWERTY:
+                oled_write_ln_P(PSTR("ALPHA"), false);
+                break;
+            case _L1:
+                oled_write_ln_P(PSTR("SYM"), false);
+                break;
+            case _L2:
+                oled_write_ln_P(PSTR("FKEYS"), false);
+                break;
+            default:
+                oled_write_ln_P(PSTR("UNDEF"), false);
+        }
+    }
 }
+#endif
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;

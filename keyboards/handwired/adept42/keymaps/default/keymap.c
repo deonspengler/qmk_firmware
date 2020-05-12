@@ -80,6 +80,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   )
 };
 
+oled_rotation_t oled_init_user(oled_rotation_t rotation) {
+  if (is_keyboard_master()) {
+    return OLED_ROTATION_270;
+  }
+  return rotation;
+}
+
+void oled_task_user(void) {
+  if (is_keyboard_master()) {
+    uint8_t led_state = host_keyboard_leds();
+    oled_write_ln_P(led_state & (1<<USB_LED_CAPS_LOCK) ? PSTR("\nCPSLK") : PSTR("     "), false);
+  }
+}
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;

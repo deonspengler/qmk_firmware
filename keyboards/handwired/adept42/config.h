@@ -26,4 +26,4 @@
 #define DEBOUNCE 0
 
 /* Set the maximum time allowed between taps */
-#define TAPPING_TERM 175
+#define TAPPING_TERM 250

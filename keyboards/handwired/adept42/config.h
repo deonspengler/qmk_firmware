@@ -23,7 +23,7 @@
 #define SOFT_SERIAL_PIN D2
 
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
-#define DEBOUNCE 5
+#define DEBOUNCE 0
 
 /* Set the maximum time allowed between taps */
 #define TAPPING_TERM 175

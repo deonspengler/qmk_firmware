@@ -89,24 +89,23 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
 
 void oled_task_user(void) {
     // led status, (Caps Lock)
+    oled_write_P(PSTR("\nCAPS:"), false);
     uint8_t led_state = host_keyboard_leds();
-
     if (led_state & (1<<USB_LED_CAPS_LOCK)) {
-        oled_write_ln_P(PSTR("\nCPSLK"), true);
+        oled_write_ln_P(PSTR("ON"), false);
     } else {
-        oled_write_ln_P(PSTR("\nCPSLK"), false);
+        oled_write_ln_P(PSTR("OFF"), false);
     }
 
     // show layer information
     oled_write_P(PSTR("\nLYR: "), false);
-
     if (is_keyboard_master()) {
         switch (get_highest_layer(layer_state)) {
             case _QWERTY:
                 oled_write_ln_P(PSTR("ALPHA"), false);
                 break;
             case _L1:
-                oled_write_ln_P(PSTR("SYM"), false);
+                oled_write_ln_P(PSTR("SYMBL"), false);
                 break;
             case _L2:
                 oled_write_ln_P(PSTR("FKEYS"), false);

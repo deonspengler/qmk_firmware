@@ -1,5 +1,7 @@
 # Adept42
 
+![Adept42 Keyboard](https://i.imgur.com/TXlT5hH.jpg)
+
 A compact 42 key ortholinear, column staggered split keyboard. The keyboard layout has been designed to be ergonomic and efficient.
 
 * Keyboard Maintainer: [Deon Spengler](https://github.com/deonspengler)

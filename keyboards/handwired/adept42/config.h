@@ -22,6 +22,12 @@
 /* Configure serial communication for the split keyboard */
 #define SOFT_SERIAL_PIN D2
 
+/* Configure pin used for selecting handness */
+#define SPLIT_HAND_PIN F5
+
+/* Enable split usb detect for Sparkfun Pro Micro */
+#define SPLIT_USB_DETECT
+
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
 #define DEBOUNCE 0
 

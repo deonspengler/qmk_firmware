@@ -27,6 +27,7 @@
 
 /* Enable split usb detect for Sparkfun Pro Micro */
 #define SPLIT_USB_DETECT
+#define SPLIT_USB_TIMEOUT 1000
 
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
 #define DEBOUNCE 0

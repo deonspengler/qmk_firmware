@@ -25,6 +25,11 @@
 /* Configure pin used for selecting handness */
 #define SPLIT_HAND_PIN F5
 
+/* Configure rgb under glow */
+#define RGB_DI_PIN D3
+#define RGBLED_NUM 6
+#define RGBLED_SPLIT 3
+
 /* Enable split usb detect for Sparkfun Pro Micro */
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 1000

@@ -62,9 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * SS = Super + Space
    * ACE = Alt + Ctrl + Enter
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| Home |  Up  | PgUp |VolUp | Del  |
+   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| Home |Insert| PgUp |VolUp | Del  |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * | ACE  |  F5  |  F6  |  F7  |  F8  |  SS  |                    |Insert| Left | Down |Right |VolDn |Pause |
+   * | ACE  |  F5  |  F6  |  F7  |  F8  |  SS  |                    | Left | Down |  Up  |Right |VolDn |Pause |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |Shift |  F9  | F10  | F11  | F12  |  AS  |                    |ScrLck| End  |Leader| PgDn |VolMte|Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
@@ -72,8 +72,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     KC_SPC, KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),              KC_PSCR, KC_HOME, KC_UP, KC_PGUP, KC_VOLU, KC_DEL, \
-     LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_INS, KC_LEFT, KC_DOWN, KC_RGHT, KC_VOLD, KC_PAUS, \
+     KC_SPC, KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),              KC_PSCR, KC_HOME, KC_INS, KC_PGUP, KC_VOLU, KC_DEL, \
+     LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
      KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_END, KC_LEAD, KC_PGDN, KC_MUTE, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
   )
@@ -87,6 +87,10 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
             return OLED_ROTATION_270;
         } else {
             return OLED_ROTATION_90;
+        }
+    } else {
+        if (isLeftHand) {
+            return OLED_ROTATION_180;
         }
     }
     return rotation;
@@ -168,6 +172,8 @@ void oled_task_user(void) {
 }
 #endif
 
-bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-  return true;
+void keyboard_post_init_user(void) {
+    // configure rgb lighting
+    //rgblight_sethsv(140, 255, 255);
+    //rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
 }

@@ -4,6 +4,7 @@
 #define _QWERTY 0
 #define _L1 1
 #define _L2 2
+#define _L3 3
 
 enum {
     TD_SHIFT_CAPS = 0
@@ -72,7 +73,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     KC_SPC, KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),              KC_PSCR, KC_HOME, KC_INS, KC_PGUP, KC_VOLU, KC_DEL, \
+     TG(_L3), KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),             KC_PSCR, KC_HOME, KC_INS, KC_PGUP, KC_VOLU, KC_DEL, \
+     LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
+     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_END, KC_LEAD, KC_PGDN, KC_MUTE, KC_TRNS, \
+                             KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
+  ),
+
+  /*
+   * Layer3
+   * ACE = Alt + Ctrl + Enter
+   * ,-----------------------------------------.                    ,-----------------------------------------.
+   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| Home |Insert| PgUp |VolUp | Del  |
+   * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+   * | ACE  |  F5  |  F6  |  F7  |  F8  |  SS  |                    | Left | Down |  Up  |Right |VolDn |Pause |
+   * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+   * |Shift |  F9  | F10  | F11  | F12  |  AS  |                    |ScrLck| End  |Leader| PgDn |VolMte|Shift |
+   * `-----------------------------------------|------.      ,------|-----------------------------------------'
+   *                             | LCtl |Enter | LAlt |      |L2Held|Space | RAlt |
+   *                             `--------------------'      `--------------------'
+   */
+  [_L3] = LAYOUT( \
+     KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),             RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, KC_VOLU, RESET, \
      LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
      KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_END, KC_LEAD, KC_PGDN, KC_MUTE, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
@@ -138,8 +159,8 @@ static void render_logo(void) {
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         // led status, (Caps Lock)
-        uint8_t led_state = host_keyboard_leds();
         oled_write_P(PSTR("\nCPSLK"), false);
+        uint8_t led_state = host_keyboard_leds();
 
         if (led_state & (1<<USB_LED_CAPS_LOCK)) {
             oled_write_ln_P(PSTR("ON"), false);
@@ -161,6 +182,10 @@ void oled_task_user(void) {
                 oled_write_ln_P(PSTR("\nLYR-LFKEYS"), false);
                 oled_write_ln_P(PSTR("LYR-RNAV"), false);
                 break;
+            case _L3:
+                oled_write_ln_P(PSTR("\nLYR-LGAME"), false);
+                oled_write_ln_P(PSTR("\nLYR-RKBSET"), false);
+                break;
             default:
                 oled_write_ln_P(PSTR("UNDEF"), false);
         }
@@ -171,9 +196,3 @@ void oled_task_user(void) {
     }
 }
 #endif
-
-void keyboard_post_init_user(void) {
-    // configure rgb lighting
-    //rgblight_sethsv(140, 255, 255);
-    //rgblight_mode(RGBLIGHT_MODE_STATIC_LIGHT);
-}

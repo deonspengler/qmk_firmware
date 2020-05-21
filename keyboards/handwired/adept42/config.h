@@ -41,3 +41,6 @@
 
 /* Set the maximum time allowed between taps */
 #define TAPPING_TERM 250
+
+/* Allow quick tapping not to trigger modifier hold */
+#define IGNORE_MOD_TAP_INTERRUPT

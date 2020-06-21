@@ -8,6 +8,12 @@
 #define PRODUCT         Adept42
 #define DESCRIPTION     A 42 key ortholinear, column staggered split keyboard
 
+/* Set polling rate */
+#define USB_POLLING_INTERVAL_MS 1
+
+/* Force N-Key RollOver */
+#define FORCE_NKRO
+
 /* Key matrix size */
 #define MATRIX_ROWS 8
 #define MATRIX_COLS 6
@@ -34,13 +40,17 @@
 
 /* Enable split usb detect for Sparkfun Pro Micro */
 #define SPLIT_USB_DETECT
-#define SPLIT_USB_TIMEOUT 1000
+#define SPLIT_USB_TIMEOUT 1500
+#define NO_USB_STARTUP_CHECK
 
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
-#define DEBOUNCE 0
+#define DEBOUNCE 5
 
 /* Set the maximum time allowed between taps */
 #define TAPPING_TERM 250
 
 /* Allow quick tapping not to trigger modifier hold */
 #define IGNORE_MOD_TAP_INTERRUPT
+
+/* Releasing key without pressing another will send the original key */
+#define RETRO_TAPPING

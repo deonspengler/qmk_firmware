@@ -165,42 +165,38 @@ void oled_task_user(void) {
         uint8_t led_state = host_keyboard_leds();
 
         if (led_state & (1<<USB_LED_CAPS_LOCK)) {
-            oled_write("ON\n", false);
+            oled_write("On\n", false);
         } else {
-            oled_write("OFF\n", false);
+            oled_write("Off\n", false);
         }
 
         // show layer information
         switch (get_highest_layer(layer_state)) {
             case _QWERTY:
-                oled_write("\nLEFT:Alpha", false);
-                oled_write("\nRGHT:Alpha", false);
+                oled_write("\n\nLEFT:Alpha", false);
+                oled_write("\n\nRGHT:Alpha", false);
                 break;
             case _L1:
-                oled_write("\nLEFT:Symbl", false);
-                oled_write("\nRGHT:Numbr", false);
+                oled_write("\n\nLEFT:Symbl", false);
+                oled_write("\n\nRGHT:Numbr", false);
                 break;
             case _L2:
-                oled_write("\nLEFT:FKeys", false);
-                oled_write("\nRGHT:Nav\n", false);
+                oled_write("\n\nLEFT:FKeys", false);
+                oled_write("\n\nRGHT:Nav\n", false);
                 break;
             case _L3:
-                oled_write("\nLEFT:Game\n", false);
-                oled_write("\nRGHT:Confg", false);
+                oled_write("\n\nLEFT:Game\n", false);
+                oled_write("\n\nRGHT:Confg", false);
                 break;
             default:
                 oled_write("UNDEF", false);
         }
 
         // show words per minute
-        oled_write("\nWPM:\n", false);
+        oled_write("\n\nWPM:\n", false);
         char wpm_str[3];
         sprintf(wpm_str, "%03d\n", get_current_wpm());
         oled_write(wpm_str, false);
-
-        // show firmware version
-        oled_write("\nVER:", false);
-        oled_write("\n0.9.1", false);
     } else {
         // render and scroll logo
         render_logo();

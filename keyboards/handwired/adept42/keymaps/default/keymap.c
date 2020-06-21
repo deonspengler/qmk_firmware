@@ -11,7 +11,9 @@ enum {
 };
 
 qk_tap_dance_action_t tap_dance_actions[] = {
-    //Tap once for Shift, twice for Caps Lock
+    /*
+     * Tap once for Shift, twice for Caps Lock
+     */
     [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS)
 };
 
@@ -44,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |  ~   |  ^   |  &   |  $   |  {   |  }   |                    |  =   |  4   |  5   |  6   |  *   |  /   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  \   |  _   |  |   |  [   |  ]   |                    |  0   |  1   |  2   |  3   |  .   |Shift |
+   * |Shift |  \   |  |   |  _   |  [   |  ]   |                    |  0   |  1   |  2   |  3   |  .   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             | LCtl |Enter |L1Held|      | RCtl |Space | RAlt |
    *                             `--------------------'      `--------------------'
@@ -52,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_L1] = LAYOUT( \
      KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LPRN, KC_RPRN,             KC_PERC, KC_7, KC_8, KC_9, KC_PPLS, KC_PMNS, \
      KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LCBR, KC_RCBR,           KC_EQL, KC_4, KC_5, KC_6, KC_PAST, KC_SLSH, \
-     KC_TRNS, KC_BSLS, KC_UNDS, KC_PIPE, KC_LBRC, KC_RBRC,          KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
+     KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, KC_LBRC, KC_RBRC,          KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_TRNS,      KC_RCTL, KC_TRNS, KC_TRNS \
   ),
 
@@ -81,22 +83,21 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /*
    * Layer3
-   * ACE = Alt + Ctrl + Enter
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| Home |Insert| PgUp |VolUp | Del  |
+   * | Esc  |      |  Q   |  W   |  E   |  R   |                    |LedPLN|LedHUI|      |      |      |MCURST|
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * | ACE  |  F5  |  F6  |  F7  |  F8  |  SS  |                    | Left | Down |  Up  |Right |VolDn |Pause |
+   * | Tab  |      |  A   |  S   |  D   |  G   |                    |LedBTH|LedSAT|      |      |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  F9  | F10  | F11  | F12  |  AS  |                    |ScrLck| End  |Leader| PgDn |VolMte|Shift |
+   * |      |      |      |      |      |      |                    |LedOFF|LedVAL|      |      |      |TGLYR3|
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             | LCtl |Enter | LAlt |      |L2Held|Space | RAlt |
+   *                             |Shift |Space |      |      |      |      |      |
    *                             `--------------------'      `--------------------'
    */
   [_L3] = LAYOUT( \
-     KC_TRNS, KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),             RGB_HUI, RGB_SAI, RGB_VAI, RGB_TOG, KC_VOLU, RESET, \
-     LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
-     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_END, KC_LEAD, KC_PGDN, KC_MUTE, KC_TRNS, \
-                             KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
+     KC_ESC, KC_NO, KC_Q, KC_W, KC_E, KC_R,                         RGB_M_P, RGB_HUI, KC_NO, KC_NO, KC_NO, RESET, \
+     KC_TAB, KC_NO, KC_A, KC_S, KC_D, KC_G,                         RGB_M_B, RGB_SAI, KC_NO, KC_NO, KC_NO, KC_NO, \
+     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                      RGB_TOG, RGB_VAI, KC_NO, KC_NO, KC_NO, TG(_L3), \
+                             KC_LSFT, KC_SPC, KC_NO,         KC_NO, KC_NO, KC_NO \
   )
 };
 
@@ -116,6 +117,7 @@ oled_rotation_t oled_init_user(oled_rotation_t rotation) {
     }
     return rotation;
 }
+
 
 static void render_logo(void) {
     static const char PROGMEM adept_logo[] = {
@@ -159,36 +161,46 @@ static void render_logo(void) {
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         // led status, (Caps Lock)
-        oled_write_P(PSTR("\nCPSLK"), false);
+        oled_write("\nCAPS:", false);
         uint8_t led_state = host_keyboard_leds();
 
         if (led_state & (1<<USB_LED_CAPS_LOCK)) {
-            oled_write_ln_P(PSTR("ON"), false);
+            oled_write("ON\n", false);
         } else {
-            oled_write_ln_P(PSTR("OFF"), false);
+            oled_write("OFF\n", false);
         }
 
         // show layer information
         switch (get_highest_layer(layer_state)) {
             case _QWERTY:
-                oled_write_ln_P(PSTR("\nLYR-LALPHA"), false);
-                oled_write_ln_P(PSTR("LYR-RALPHA"), false);
+                oled_write("\nLEFT:Alpha", false);
+                oled_write("\nRGHT:Alpha", false);
                 break;
             case _L1:
-                oled_write_ln_P(PSTR("\nLYR-LSYMBL"), false);
-                oled_write_ln_P(PSTR("LYR-RNUMBR"), false);
+                oled_write("\nLEFT:Symbl", false);
+                oled_write("\nRGHT:Numbr", false);
                 break;
             case _L2:
-                oled_write_ln_P(PSTR("\nLYR-LFKEYS"), false);
-                oled_write_ln_P(PSTR("LYR-RNAV"), false);
+                oled_write("\nLEFT:FKeys", false);
+                oled_write("\nRGHT:Nav\n", false);
                 break;
             case _L3:
-                oled_write_ln_P(PSTR("\nLYR-LGAME"), false);
-                oled_write_ln_P(PSTR("\nLYR-RKBSET"), false);
+                oled_write("\nLEFT:Game\n", false);
+                oled_write("\nRGHT:Confg", false);
                 break;
             default:
-                oled_write_ln_P(PSTR("UNDEF"), false);
+                oled_write("UNDEF", false);
         }
+
+        // show words per minute
+        oled_write("\nWPM:\n", false);
+        char wpm_str[3];
+        sprintf(wpm_str, "%03d\n", get_current_wpm());
+        oled_write(wpm_str, false);
+
+        // show firmware version
+        oled_write("\nVER:", false);
+        oled_write("\n0.9.1", false);
     } else {
         // render and scroll logo
         render_logo();

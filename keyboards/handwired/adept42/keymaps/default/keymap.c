@@ -5,6 +5,7 @@
 #define _L1 1
 #define _L2 2
 #define _L3 3
+#define _L4 4
 
 enum {
     TD_SHIFT_CAPS = 0
@@ -84,6 +85,25 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Layer3
    * ,-----------------------------------------.                    ,-----------------------------------------.
+   * |      |      |      |      |      |      |                    |  F1  |      |  Up  |      |      |      |
+   * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+   * |      |      |      |      |      |      |                    |      | Left | Down |Right |      |      |
+   * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
+   * |      |      |      |      |      |      |                    |  5   |  1   |  2   |      |      |TGLYR3|
+   * `-----------------------------------------|------.      ,------|-----------------------------------------'
+   *                             |      |      |      |      |MCURST|      |      |
+   *                             `--------------------'      `--------------------'
+   */
+  [_L3] = LAYOUT( \
+     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_F1, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, \
+     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, \
+     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_5, KC_1, KC_2, KC_TRNS, KC_TRNS, TG(_L3), \
+                             KC_TRNS, KC_TRNS, KC_TRNS,      RESET, KC_TRNS, KC_TRNS \
+  ),
+
+  /*
+   * Layer4
+   * ,-----------------------------------------.                    ,-----------------------------------------.
    * | Esc  |      |  Q   |  W   |  E   |  R   |                    |LedPLN|LedHUI|      |      |      |MCURST|
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * | Tab  |      |  A   |  S   |  D   |  G   |                    |LedBTH|LedSAT|      |      |      |      |
@@ -93,10 +113,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             |Shift |Space |      |      |      |      |      |
    *                             `--------------------'      `--------------------'
    */
-  [_L3] = LAYOUT( \
+  [_L4] = LAYOUT( \
      KC_ESC, KC_NO, KC_Q, KC_W, KC_E, KC_R,                         RGB_M_P, RGB_HUI, KC_NO, KC_NO, KC_NO, RESET, \
      KC_TAB, KC_NO, KC_A, KC_S, KC_D, KC_G,                         RGB_M_B, RGB_SAI, KC_NO, KC_NO, KC_NO, KC_NO, \
-     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                      RGB_TOG, RGB_VAI, KC_NO, KC_NO, KC_NO, TG(_L3), \
+     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                      RGB_TOG, RGB_VAI, KC_NO, KC_NO, KC_NO, TG(_L4), \
                              KC_LSFT, KC_SPC, KC_NO,         KC_NO, KC_NO, KC_NO \
   )
 };
@@ -186,7 +206,7 @@ void oled_task_user(void) {
                 break;
             case _L3:
                 oled_write("\n\nLEFT:Game\n", false);
-                oled_write("\n\nRGHT:Confg", false);
+                oled_write("\n\nRGHT:Game\n", false);
                 break;
             default:
                 oled_write("UNDEF", false);

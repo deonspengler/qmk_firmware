@@ -8,14 +8,9 @@
 #define _L4 4
 
 enum {
-    TD_SHIFT_CAPS = 0
-};
-
-qk_tap_dance_action_t tap_dance_actions[] = {
-    /*
-     * Tap once for Shift, twice for Caps Lock
-     */
-    [TD_SHIFT_CAPS] = ACTION_TAP_DANCE_DOUBLE(KC_LSFT, KC_CAPS)
+    SINGLE_TAP,
+    SINGLE_HOLD,
+    LT_LEAD
 };
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
@@ -36,16 +31,16 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_QWERTY] = LAYOUT( \
      KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, \
      KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, \
-     TD(TD_SHIFT_CAPS), KC_Z, KC_X, KC_C, KC_V, KC_B,               KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, TD(TD_SHIFT_CAPS), \
-                        KC_LCTL, LCA_T(KC_ENT), MO(_L1),     MO(_L2), LGUI_T(KC_SPC), KC_RALT \
+     KC_LSPO, KC_Z, KC_X, KC_C, KC_V, KC_B,                         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSPC, \
+                       KC_LCTL, LCA_T(KC_ENT), MO(_L1),      TD(LT_LEAD), LGUI_T(KC_SPC), KC_RALT \
   ),
 
   /*
    * Layer1
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |  `   |  !   |  @   |  #   |  (   |  )   |                    |  %   |  7   |  8   |  9   |  +   |  -   |
+   * |  `   |  !   |  @   |  #   |  (   |  )   |                    |  =   |  7   |  8   |  9   |  +   |  -   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |  ~   |  ^   |  &   |  $   |  {   |  }   |                    |  =   |  4   |  5   |  6   |  *   |  /   |
+   * |  ~   |  ^   |  &   |  $   |  {   |  }   |                    |  %   |  4   |  5   |  6   |  *   |  /   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |Shift |  \   |  |   |  _   |  [   |  ]   |                    |  0   |  1   |  2   |  3   |  .   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
@@ -53,8 +48,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             `--------------------'      `--------------------'
    */
   [_L1] = LAYOUT( \
-     KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LPRN, KC_RPRN,             KC_PERC, KC_7, KC_8, KC_9, KC_PPLS, KC_PMNS, \
-     KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LCBR, KC_RCBR,           KC_EQL, KC_4, KC_5, KC_6, KC_PAST, KC_SLSH, \
+     KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LPRN, KC_RPRN,             KC_EQL, KC_7, KC_8, KC_9, KC_PPLS, KC_PMNS, \
+     KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LCBR, KC_RCBR,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_SLSH, \
      KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, KC_LBRC, KC_RBRC,          KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_TRNS,      KC_RCTL, KC_TRNS, KC_TRNS \
   ),
@@ -66,39 +61,39 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * SS = Super + Space
    * ACE = Alt + Ctrl + Enter
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| Home |Insert| PgUp |VolUp | Del  |
+   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * | ACE  |  F5  |  F6  |  F7  |  F8  |  SS  |                    | Left | Down |  Up  |Right |VolDn |Pause |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  F9  | F10  | F11  | F12  |  AS  |                    |ScrLck| End  |Leader| PgDn |VolMte|Shift |
+   * |Shift |  F9  | F10  | F11  | F12  |  AS  |                    |ScrLck| PgD  |Leader| End  |VolMte|Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             | LCtl |Enter | LAlt |      |L2Held|Space | RAlt |
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     TG(_L3), KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),             KC_PSCR, KC_HOME, KC_INS, KC_PGUP, KC_VOLU, KC_DEL, \
+     TG(_L3), KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),             KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
      LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
-     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_END, KC_LEAD, KC_PGDN, KC_MUTE, KC_TRNS, \
+     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_PGDN, KC_LEAD, KC_END, KC_MUTE, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
   ),
 
   /*
    * Layer3
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |      |      |      |      |      |      |                    |  F1  |      |  Up  |      |      |      |
+   * | Esc  |  V   |  Q   |  W   |  E   |  R   |                    |      |      |  Up  |      |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |                    |      | Left | Down |Right |      |      |
+   * | Tab  |Shift |  A   |  S   |  D   |  F   |                    |      | Left | Down |Right |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |                    |  5   |  1   |  2   |      |      |TGLYR3|
+   * |  B   | LCtl |  Z   |  X   |  T   | LAlt |                    |  5   |  1   |  2   |      |      |TGLYR3|
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             |      |      |      |      |MCURST|      |      |
+   *                             |  C   |Space |  G   |      |MCURST|      |      |
    *                             `--------------------'      `--------------------'
    */
   [_L3] = LAYOUT( \
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_F1, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, \
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, \
-     KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS, KC_TRNS,          KC_5, KC_1, KC_2, KC_TRNS, KC_TRNS, TG(_L3), \
-                             KC_TRNS, KC_TRNS, KC_TRNS,      RESET, KC_TRNS, KC_TRNS \
+     KC_ESC, KC_V, KC_Q, KC_W, KC_E, KC_R,                          KC_TRNS, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, \
+     KC_TAB, KC_LSFT, KC_A, KC_S, KC_D, KC_F,                       KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, \
+     KC_B, KC_LCTL, KC_Z, KC_X, KC_T, KC_LALT,                         KC_5, KC_1, KC_2, KC_TRNS, KC_TRNS, TG(_L3), \
+                                 KC_C, KC_SPC, KC_G,         RESET, KC_TRNS, KC_TRNS \
   ),
 
   /*
@@ -178,6 +173,7 @@ static void render_logo(void) {
     oled_write_raw_P(adept_logo, sizeof(adept_logo));
 }
 
+
 void oled_task_user(void) {
     if (is_keyboard_master()) {
         // led status, (Caps Lock)
@@ -224,3 +220,60 @@ void oled_task_user(void) {
     }
 }
 #endif
+
+
+// the below is for an advanced tap dance to enable the leader key
+typedef struct {
+    bool is_press_action;
+    uint8_t state;
+} tap;
+
+static tap ltld = {
+    .is_press_action = true,
+    .state = 0
+};
+
+uint8_t cur_dance(qk_tap_dance_state_t *state) {
+    if (state->count == 1) {
+        if (!state->pressed) return SINGLE_TAP;
+        // Key is still held. Means you want to send a 'HOLD'.
+        else return SINGLE_HOLD;
+    } else return 8; // Magic number. At some point this method will expand to work for more presses
+}
+
+void layerlead_finished(qk_tap_dance_state_t *state, void *user_data) {
+  ltld.state = cur_dance(state);
+  switch (ltld.state) {
+    case SINGLE_TAP:
+      qk_leader_start(); break;
+    case SINGLE_HOLD:
+      layer_on(2); break;
+  }
+}
+
+void layerlead_reset(qk_tap_dance_state_t *state, void *user_data) {
+  switch (ltld.state) {
+    case SINGLE_HOLD:
+      layer_off(2); break;
+  }
+}
+
+qk_tap_dance_action_t tap_dance_actions[] = {
+    [LT_LEAD] = ACTION_TAP_DANCE_FN_ADVANCED(NULL, layerlead_finished, layerlead_reset)
+};
+
+
+// leader macro's
+LEADER_EXTERNS();
+
+void matrix_scan_user(void) {
+  LEADER_DICTIONARY() {
+    leading = false;
+    leader_end();
+
+    SEQ_ONE_KEY(KC_P) {
+      // Anything you can do in a macro.
+      SEND_STRING("https://www.deonsworld.co.za\n");
+    }
+  }
+}

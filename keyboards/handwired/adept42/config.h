@@ -54,3 +54,7 @@
 
 /* Releasing key without pressing another will send the original key */
 #define RETRO_TAPPING
+
+/* Enable keyboard to funtion as a gamepad as well */
+#define JOYSTICK_BUTTON_COUNT 12
+#define JOYSTICK_AXES_COUNT 0

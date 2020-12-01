@@ -38,19 +38,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Layer1
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |  `   |  !   |  @   |  #   |  (   |  )   |                    |  =   |  7   |  8   |  9   |  +   |  -   |
+   * |  `   |  !   |  @   |  #   |  {   |  }   |                    |  =   |  7   |  8   |  9   |  +   |  -   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |  ~   |  ^   |  &   |  $   |  {   |  }   |                    |  %   |  4   |  5   |  6   |  *   |  /   |
+   * |  ~   |  ^   |  &   |  $   |  [   |  ]   |                    |  %   |  4   |  5   |  6   |  *   |  /   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  \   |  |   |  _   |  [   |  ]   |                    |  0   |  1   |  2   |  3   |  .   |Shift |
+   * |Shift |  \   |  |   |  _   |Layer3|Layer4|                    |  0   |  1   |  2   |  3   |  .   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             | LCtl |Enter |L1Held|      | RCtl |Space | RAlt |
    *                             `--------------------'      `--------------------'
    */
   [_L1] = LAYOUT( \
-     KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LPRN, KC_RPRN,             KC_EQL, KC_7, KC_8, KC_9, KC_PPLS, KC_PMNS, \
-     KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LCBR, KC_RCBR,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_SLSH, \
-     KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, KC_LBRC, KC_RBRC,          KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
+     KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LCBR, KC_RCBR,             KC_EQL, KC_7, KC_8, KC_9, KC_PPLS, KC_PMNS, \
+     KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LBRC, KC_RBRC,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_SLSH, \
+     KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, TG(_L3), TG(_L4),          KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_TRNS,      KC_RCTL, KC_TRNS, KC_TRNS \
   ),
 
@@ -61,58 +61,58 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * SS = Super + Space
    * ACE = Alt + Ctrl + Enter
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |Layer3|  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
+   * |  AS  |  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * | ACE  |  F5  |  F6  |  F7  |  F8  |  SS  |                    | Left | Down |  Up  |Right |VolDn |Pause |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  F9  | F10  | F11  | F12  |  AS  |                    |ScrLck| PgD  |Leader| End  |VolMte|Shift |
+   * |Shift |  F9  | F10  | F11  | F12  | Caps |                    |ScrLck| PgD  |Leader| End  |VolMte|Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             | LCtl |Enter | LAlt |      |L2Held|Space | RAlt |
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     TG(_L3), KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),             KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
+     LALT(KC_SPC), KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),        KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
      LCA(KC_ENT), KC_F5, KC_F6, KC_F7, KC_F8, LGUI(KC_SPC),         KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
-     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, LALT(KC_SPC),          KC_SLCK, KC_PGDN, KC_LEAD, KC_END, KC_MUTE, KC_TRNS, \
+     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, KC_CAPS,               KC_SLCK, KC_PGDN, KC_LEAD, KC_END, KC_MUTE, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
   ),
 
   /*
    * Layer3
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * | Esc  |  V   |  Q   |  W   |  E   |  R   |                    |      |      |  Up  |      |      |      |
+   * | Esc  |  V   |  Q   |  W   |  E   |  R   |                    |LedPLN|LedHUI|      |      |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * | Tab  |Shift |  A   |  S   |  D   |  F   |                    |      | Left | Down |Right |      |      |
+   * | Tab  |Shift |  A   |  S   |  D   |  F   |                    |LedBTH|LedSAT|      |      |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |  B   | LCtl |  Z   |  X   |  T   | LAlt |                    |  5   |  1   |  2   |      |      |TGLYR3|
+   * |  B   | LCtl |  Z   |  X   |  T   | LAlt |                    |LedOFF|LedVAL|      |      |      |TGLYR3|
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             |  C   |Space |  G   |      |MCURST|      |      |
+   *                             |  C   |Space |  G   |      |      |      |      |
    *                             `--------------------'      `--------------------'
    */
   [_L3] = LAYOUT( \
-     KC_ESC, KC_V, KC_Q, KC_W, KC_E, KC_R,                          KC_TRNS, KC_TRNS, KC_UP, KC_TRNS, KC_TRNS, KC_TRNS, \
-     KC_TAB, KC_LSFT, KC_A, KC_S, KC_D, KC_F,                       KC_TRNS, KC_LEFT, KC_DOWN, KC_RGHT, KC_TRNS, KC_TRNS, \
-     KC_B, KC_LCTL, KC_Z, KC_X, KC_T, KC_LALT,                         KC_5, KC_1, KC_2, KC_TRNS, KC_TRNS, TG(_L3), \
-                                 KC_C, KC_SPC, KC_G,         RESET, KC_TRNS, KC_TRNS \
+     KC_ESC, KC_V, KC_Q, KC_W, KC_E, KC_R,                          RGB_M_P, RGB_HUI, KC_NO, KC_NO, KC_NO, KC_NO, \
+     KC_TAB, KC_LSFT, KC_A, KC_S, KC_D, KC_F,                       RGB_M_B, RGB_SAI, KC_NO, KC_NO, KC_NO, KC_NO, \
+     KC_B, KC_LCTL, KC_Z, KC_X, KC_T, KC_LALT,                      RGB_TOG, RGB_VAI, KC_NO, KC_NO, KC_NO, TG(_L3), \
+                                 KC_C, KC_SPC, KC_G,         KC_NO, KC_NO, KC_NO \
   ),
 
   /*
    * Layer4
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * | Esc  |      |  Q   |  W   |  E   |  R   |                    |LedPLN|LedHUI|      |      |      |MCURST|
+   * |  F1  |      |      |  Up  |      |      |                    |      |  A   |  S   |  Q   |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * | Tab  |      |  A   |  S   |  D   |  G   |                    |LedBTH|LedSAT|      |      |      |      |
+   * |Enter |      | Left | Down |Right |      |                    |      |  Z   |  X   |  W   |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |      |      |      |      |      |      |                    |LedOFF|LedVAL|      |      |      |TGLYR3|
+   * |Shift |      |      |      |      |      |                    |      |      |      |      |      |TGLYR4|
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             |Shift |Space |      |      |      |      |      |
+   *                             |      |      |      |      |      |      |      |
    *                             `--------------------'      `--------------------'
    */
   [_L4] = LAYOUT( \
-     KC_ESC, KC_NO, KC_Q, KC_W, KC_E, KC_R,                         RGB_M_P, RGB_HUI, KC_NO, KC_NO, KC_NO, RESET, \
-     KC_TAB, KC_NO, KC_A, KC_S, KC_D, KC_G,                         RGB_M_B, RGB_SAI, KC_NO, KC_NO, KC_NO, KC_NO, \
-     KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                      RGB_TOG, RGB_VAI, KC_NO, KC_NO, KC_NO, TG(_L4), \
-                             KC_LSFT, KC_SPC, KC_NO,         KC_NO, KC_NO, KC_NO \
+     KC_F1, KC_NO, KC_NO, KC_UP, KC_NO, KC_NO,                      KC_NO, KC_A, KC_S, KC_Q, KC_NO, KC_NO, \
+     KC_ENT, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_NO,               KC_NO, KC_Z, KC_X, KC_W, KC_NO, KC_NO, \
+     KC_RSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, TG(_L4), \
+                                   KC_NO, KC_NO, KC_NO,      KC_NO, KC_NO, KC_NO \
   )
 };
 
@@ -198,11 +198,15 @@ void oled_task_user(void) {
                 break;
             case _L2:
                 oled_write("\n\nLEFT:FKeys", false);
-                oled_write("\n\nRGHT:Nav\n", false);
+                oled_write("\n\nRGHT:NAV\n", false);
                 break;
             case _L3:
-                oled_write("\n\nLEFT:Game\n", false);
-                oled_write("\n\nRGHT:Game\n", false);
+                oled_write("\n\nLEFT:FPS\n", false);
+                oled_write("\n\nRGHT:KBSet", false);
+                break;
+            case _L4:
+                oled_write("\n\nLEFT:DPad\n", false);
+                oled_write("\n\nRGHT:BTNS\n", false);
                 break;
             default:
                 oled_write("UNDEF", false);
@@ -222,7 +226,7 @@ void oled_task_user(void) {
 #endif
 
 
-// the below is for an advanced tap dance to enable the leader key
+// advanced tap dance to enable the leader key
 typedef struct {
     bool is_press_action;
     uint8_t state;
@@ -271,9 +275,16 @@ void matrix_scan_user(void) {
     leading = false;
     leader_end();
 
-    SEQ_ONE_KEY(KC_P) {
-      // Anything you can do in a macro.
+    SEQ_ONE_KEY(KC_W) {
       SEND_STRING("https://www.deonsworld.co.za\n");
+    }
+
+    SEQ_TWO_KEYS(KC_P, KC_W) {
+      SEND_STRING("QMK Leader key is cool");
+    }
+
+    SEQ_FIVE_KEYS(KC_M, KC_C, KC_R, KC_S, KC_T) {
+      reset_keyboard();
     }
   }
 }

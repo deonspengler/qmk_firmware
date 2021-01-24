@@ -1,6 +1,7 @@
 #include "adept42.h"
-#include "split_util.h"
 #include "raw_hid.h"
+#include "split_util.h"
+#include "version.h"
 
 #define _QWERTY 0
 #define _L1 1
@@ -17,8 +18,10 @@ enum {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Qwerty
-   * Enter = Activates Enter when tapped and Alt + Ctrl when held
-   * Space = Activates Space when tapped and Super when held
+   * Enter = Enter when tapped and Alt + Ctrl when held
+   * Space = Space when tapped and Super when held
+   * Shift = Parenthesis when tapped and Shift when held
+   * Layer2 = Leader key when tapped and layer 2 when held
    * ,-----------------------------------------.                    ,-----------------------------------------.
    * | Esc  |  Q   |  W   |  E   |  R   |  T   |                    |  Y   |  U   |  I   |  O   |  P   | Bspc |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -39,9 +42,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Layer1
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |  `   |  !   |  @   |  #   |  {   |  }   |                    |  =   |  7   |  8   |  9   |  +   |  -   |
+   * |  `   |  !   |  @   |  #   |  {   |  }   |                    |  =   |  7   |  8   |  9   |  /   |  -   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |  ~   |  ^   |  &   |  $   |  [   |  ]   |                    |  %   |  4   |  5   |  6   |  *   |  /   |
+   * |  ~   |  ^   |  &   |  $   |  [   |  ]   |                    |  %   |  4   |  5   |  6   |  *   |  +   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |Shift |  \   |  |   |  _   |Layer3|Layer4|                    |  0   |  1   |  2   |  3   |  .   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
@@ -49,8 +52,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             `--------------------'      `--------------------'
    */
   [_L1] = LAYOUT( \
-     KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LCBR, KC_RCBR,             KC_EQL, KC_7, KC_8, KC_9, KC_PPLS, KC_PMNS, \
-     KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LBRC, KC_RBRC,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_SLSH, \
+     KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LCBR, KC_RCBR,             KC_EQL, KC_7, KC_8, KC_9, KC_SLSH, KC_PMNS, \
+     KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LBRC, KC_RBRC,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_PPLS, \
      KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, TG(_L3), TG(_L4),          KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_TRNS,      KC_RCTL, KC_TRNS, KC_TRNS \
   ),
@@ -175,8 +178,13 @@ void matrix_scan_user(void) {
     }
 
     // reset microcontroller
-    SEQ_THREE_KEYS(KC_M, KC_C, KC_R) {
+    SEQ_THREE_KEYS(KC_K, KC_B, KC_R) {
       reset_keyboard();
+    }
+
+    // display firmware version
+    SEQ_THREE_KEYS(KC_K, KC_B, KC_V) {
+      SEND_STRING("QMK firmware: v" QMK_VERSION "\nBuilt on: " QMK_BUILDDATE "\nKeyboard: " QMK_KEYBOARD);
     }
   }
 }

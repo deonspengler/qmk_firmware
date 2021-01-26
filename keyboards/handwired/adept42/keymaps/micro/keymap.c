@@ -178,6 +178,14 @@ void matrix_scan_user(void) {
       layer_on(4);
     }
 
+    // paste text from primary buffer
+    SEQ_ONE_KEY(KC_I) {
+      register_code(KC_LSFT);
+      register_code(KC_INS);
+      unregister_code(KC_INS);
+      unregister_code(KC_LSFT);
+    }
+
     SEQ_TWO_KEYS(KC_P, KC_W) {
       SEND_STRING("https://www.deonsworld.co.za\n");
     }

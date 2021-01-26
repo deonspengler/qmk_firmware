@@ -41,12 +41,13 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   /*
    * Layer1
+   * RCtl = Zero when tapped and RCtl when held
    * ,-----------------------------------------.                    ,-----------------------------------------.
    * |  `   |  !   |  @   |  #   |  {   |  }   |                    |  =   |  7   |  8   |  9   |  /   |  -   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |  ~   |  ^   |  &   |  $   |  [   |  ]   |                    |  %   |  4   |  5   |  6   |  *   |  +   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  \   |  |   |  _   |  <   |  >   |                    |  0   |  1   |  2   |  3   |  .   |Shift |
+   * |Shift |  \   |  |   |  _   |  <   |  >   |                    |  ,   |  1   |  2   |  3   |  .   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             | LCtl |Enter |L1Held|      | RCtl |Space | RAlt |
    *                             `--------------------'      `--------------------'
@@ -54,8 +55,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_L1] = LAYOUT( \
      KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LCBR, KC_RCBR,             KC_EQL, KC_7, KC_8, KC_9, KC_SLSH, KC_PMNS, \
      KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LBRC, KC_RBRC,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_PPLS, \
-     KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, KC_LT, KC_GT,              KC_0, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
-                             KC_TRNS, KC_TRNS, KC_TRNS,      KC_RCTL, KC_TRNS, KC_TRNS \
+     KC_TRNS, KC_BSLS, KC_PIPE, KC_UNDS, KC_LT, KC_GT,              KC_COMM, KC_1, KC_2, KC_3, KC_PDOT, KC_TRNS, \
+                             KC_TRNS, KC_TRNS, KC_TRNS,      RCTL_T(KC_0), KC_TRNS, KC_TRNS \
   ),
 
   /*
@@ -64,19 +65,19 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * CE = Ctrl + Enter
    * SS = Super + Space
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |  AS  |  F1  |  F2  |  F3  |  F4  |  CE  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
+   * |      |  F1  |  F2  |  F3  |  F4  |  SS  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |  SS  |  F5  |  F6  |  F7  |  F8  |      |                    | Left | Down |  Up  |Right |VolDn |Pause |
+   * |  AS  |  F5  |  F6  |  F7  |  F8  |  CE  |                    | Left | Down |  Up  |Right |VolDn |Pause |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  F9  | F10  | F11  | F12  | Caps |                    |ScrLck| PgD  |      | End  |VolMte|Shift |
+   * |Shift |  F9  | F10  | F11  | F12  |      |                    |ScrLck| PgD  | Caps | End  |VolMte|Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             | LCtl |Enter | LAlt |      |L2Held|Space | RAlt |
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     LALT(KC_SPC), KC_F1, KC_F2, KC_F3, KC_F4, LCTL(KC_ENT),        KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
-     LGUI(KC_SPC), KC_F5, KC_F6, KC_F7, KC_F8, KC_NO,               KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
-     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, KC_CAPS,               KC_SLCK, KC_PGDN, KC_NO, KC_END, KC_MUTE, KC_TRNS, \
+     KC_NO, KC_F1, KC_F2, KC_F3, KC_F4, LGUI(KC_SPC),               KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
+     LALT(KC_SPC), KC_F5, KC_F6, KC_F7, KC_F8, LCTL(KC_ENT),        KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
+     KC_TRNS, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,                 KC_SLCK, KC_PGDN, KC_CAPS, KC_END, KC_MUTE, KC_TRNS, \
                              KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
   ),
 

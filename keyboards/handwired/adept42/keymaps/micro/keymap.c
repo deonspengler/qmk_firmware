@@ -101,9 +101,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Layer4
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |  F1  |      |      |  Up  |      |      |                    |      |  A   |  S   |  Q   |      |      |
+   * |  F1  |      |      |  Up  |      |      |                    |      |  A   |  S   |  Q   |  1   |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Enter |      | Left | Down |Right |      |                    |      |  Z   |  X   |  W   |      |      |
+   * |Enter |      | Left | Down |Right |      |                    |      |  Z   |  X   |  W   |  2   |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |Shift |      |      |      |      |      |                    |      |      |      |      |      |TGLYR4|
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
@@ -111,8 +111,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             `--------------------'      `--------------------'
    */
   [_L4] = LAYOUT( \
-     KC_F1, KC_NO, KC_NO, KC_UP, KC_NO, KC_NO,                      KC_NO, KC_A, KC_S, KC_Q, KC_NO, KC_NO, \
-     KC_ENT, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_NO,               KC_NO, KC_Z, KC_X, KC_W, KC_NO, KC_NO, \
+     KC_F1, KC_NO, KC_NO, KC_UP, KC_NO, KC_NO,                      KC_NO, KC_A, KC_S, KC_Q, KC_1, KC_NO, \
+     KC_ENT, KC_NO, KC_LEFT, KC_DOWN, KC_RGHT, KC_NO,               KC_NO, KC_Z, KC_X, KC_W, KC_2, KC_NO, \
      KC_RSFT, KC_NO, KC_NO, KC_NO, KC_NO, KC_NO,                    KC_NO, KC_NO, KC_NO, KC_NO, KC_NO, TG(_L4), \
                                    KC_NO, KC_NO, KC_NO,      KC_NO, KC_NO, KC_NO \
   )
@@ -184,8 +184,23 @@ void matrix_scan_user(void) {
       unregister_code(KC_LSFT);
     }
 
-    SEQ_TWO_KEYS(KC_P, KC_W) {
-      SEND_STRING("https://www.deonsworld.co.za\n");
+    // play dynamic macro 1
+    SEQ_ONE_KEY(KC_M) {
+      keyrecord_t kr;
+      process_dynamic_macro(DYN_MACRO_PLAY1, &kr);
+    }
+
+    // record dynamic macro 1
+    SEQ_TWO_KEYS(KC_M, KC_R) {
+      keyrecord_t kr;
+      process_dynamic_macro(DYN_REC_START1, &kr);
+    }
+
+    // stop recording macro
+    SEQ_TWO_KEYS(KC_M, KC_S) {
+      keyrecord_t kr;
+      kr.event.pressed = true;
+      process_dynamic_macro(DYN_REC_STOP, &kr);
     }
 
     // reset microcontroller
@@ -208,6 +223,24 @@ uint32_t layer_state_set_user(uint32_t state) {
   raw_hid_send(msg, RAW_EPSIZE);
 
   return state;
+}
+
+void dynamic_macro_record_start_user(void) {
+  uint8_t msg[RAW_EPSIZE] = {0};
+  sprintf((char *)msg, "MACRO:1");
+  raw_hid_send(msg, RAW_EPSIZE);
+}
+
+void dynamic_macro_play_user(int8_t direction) {
+  uint8_t msg[RAW_EPSIZE] = {0};
+  sprintf((char *)msg, "MACRO:3");
+  raw_hid_send(msg, RAW_EPSIZE);
+}
+
+void dynamic_macro_record_end_user(int8_t direction) {
+  uint8_t msg[RAW_EPSIZE] = {0};
+  sprintf((char *)msg, "MACRO:5");
+  raw_hid_send(msg, RAW_EPSIZE);
 }
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {

@@ -8,7 +8,6 @@
 #define _L2 2
 #define _L3 3
 #define _L4 4
-#define KEYMAP_VERSION "2.17"
 
 enum {
   SINGLE_TAP,
@@ -216,7 +215,7 @@ void matrix_scan_user(void) {
     // display adept42 firmware version
     SEQ_TWO_KEYS(KC_K, KC_V) {
       uint8_t msg[RAW_EPSIZE] = {0};
-      sprintf((char *)msg, "V:%s", KEYMAP_VERSION);
+      sprintf((char *)msg, "V:%s", FW_VERSION);
       raw_hid_send(msg, RAW_EPSIZE);
     }
 

@@ -16,3 +16,5 @@
     { R20, R21, R22, R23, R24, R25 }, \
     { R30, R31, R32, KC_NO, KC_NO, KC_NO } \
   }
+
+#define FW_VERSION "2.18"

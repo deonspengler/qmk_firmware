@@ -8,6 +8,7 @@
 #define _L2 2
 #define _L3 3
 #define _L4 4
+#define KEYMAP_VERSION "2.17"
 
 enum {
   SINGLE_TAP,
@@ -207,9 +208,23 @@ void matrix_scan_user(void) {
       reset_keyboard();
     }
 
-    // display firmware version
-    SEQ_TWO_KEYS(KC_K, KC_V) {
+    // display qmk firmware version
+    SEQ_TWO_KEYS(KC_Q, KC_V) {
       SEND_STRING("QMK firmware: v" QMK_VERSION "\nBuilt on: " QMK_BUILDDATE "\nKeyboard: " QMK_KEYBOARD);
+    }
+
+    // display adept42 firmware version
+    SEQ_TWO_KEYS(KC_K, KC_V) {
+      uint8_t msg[RAW_EPSIZE] = {0};
+      sprintf((char *)msg, "V:%s", KEYMAP_VERSION);
+      raw_hid_send(msg, RAW_EPSIZE);
+    }
+
+    // display words per minute
+    SEQ_TWO_KEYS(KC_K, KC_W) {
+      uint8_t msg[RAW_EPSIZE] = {0};
+      sprintf((char *)msg, "W:%03d", get_current_wpm());
+      raw_hid_send(msg, RAW_EPSIZE);
     }
   }
 }

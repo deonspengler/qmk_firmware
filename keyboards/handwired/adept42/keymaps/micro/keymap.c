@@ -163,6 +163,8 @@ LEADER_EXTERNS();
 
 void matrix_scan_user(void) {
   LEADER_DICTIONARY() {
+    keyrecord_t kr;
+    kr.event.pressed = false;
     leading = false;
     leader_end();
 
@@ -186,30 +188,27 @@ void matrix_scan_user(void) {
 
     // play dynamic macro 1
     SEQ_ONE_KEY(KC_M) {
-      keyrecord_t kr;
       process_dynamic_macro(DYN_MACRO_PLAY1, &kr);
     }
 
     // record dynamic macro 1
     SEQ_TWO_KEYS(KC_M, KC_R) {
-      keyrecord_t kr;
       process_dynamic_macro(DYN_REC_START1, &kr);
     }
 
     // stop recording macro
     SEQ_TWO_KEYS(KC_M, KC_S) {
-      keyrecord_t kr;
       kr.event.pressed = true;
       process_dynamic_macro(DYN_REC_STOP, &kr);
     }
 
     // reset microcontroller
-    SEQ_THREE_KEYS(KC_K, KC_B, KC_R) {
+    SEQ_TWO_KEYS(KC_K, KC_R) {
       reset_keyboard();
     }
 
     // display firmware version
-    SEQ_THREE_KEYS(KC_K, KC_B, KC_V) {
+    SEQ_TWO_KEYS(KC_K, KC_V) {
       SEND_STRING("QMK firmware: v" QMK_VERSION "\nBuilt on: " QMK_BUILDDATE "\nKeyboard: " QMK_KEYBOARD);
     }
   }
@@ -219,7 +218,7 @@ uint32_t layer_state_set_user(uint32_t state) {
   uint8_t layer = biton32(state);
   uint8_t msg[RAW_EPSIZE] = {0};
 
-  sprintf((char *)msg, "LAYER:%u", layer);
+  sprintf((char *)msg, "L:%u", layer);
   raw_hid_send(msg, RAW_EPSIZE);
 
   return state;
@@ -227,19 +226,19 @@ uint32_t layer_state_set_user(uint32_t state) {
 
 void dynamic_macro_record_start_user(void) {
   uint8_t msg[RAW_EPSIZE] = {0};
-  sprintf((char *)msg, "MACRO:1");
+  sprintf((char *)msg, "M:1");
   raw_hid_send(msg, RAW_EPSIZE);
 }
 
 void dynamic_macro_play_user(int8_t direction) {
   uint8_t msg[RAW_EPSIZE] = {0};
-  sprintf((char *)msg, "MACRO:3");
+  sprintf((char *)msg, "M:3");
   raw_hid_send(msg, RAW_EPSIZE);
 }
 
 void dynamic_macro_record_end_user(int8_t direction) {
   uint8_t msg[RAW_EPSIZE] = {0};
-  sprintf((char *)msg, "MACRO:5");
+  sprintf((char *)msg, "M:5");
   raw_hid_send(msg, RAW_EPSIZE);
 }
 

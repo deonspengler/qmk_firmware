@@ -35,7 +35,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
      KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, \
      KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, \
      KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,                         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, \
-                     CTL_T(KC_SPC), LCA_T(KC_ENT), MO(_L1),  TD(LT_LEAD), LGUI_T(KC_SPC), KC_RALT \
+                    LCTL_T(KC_SPC), LCA_T(KC_ENT), MO(_L1),  TD(LT_LEAD), LGUI_T(KC_SPC), KC_RALT \
   ),
 
   /*
@@ -240,6 +240,15 @@ void matrix_scan_user(void) {
       sprintf((char *)msg, "W:%03d", get_current_wpm());
       raw_hid_send(msg, RAW_EPSIZE);
     }
+  }
+}
+
+bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case LGUI_T(KC_SPC):
+      return true;
+    default:
+      return false;
   }
 }
 

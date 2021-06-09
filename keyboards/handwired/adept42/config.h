@@ -31,13 +31,6 @@
 /* Configure pin used for selecting handness */
 #define SPLIT_HAND_PIN F5
 
-/* Configure rgb under glow */
-#define RGB_DI_PIN D3
-#define RGBLED_NUM 6
-#define RGBLED_SPLIT { 3, 3 }
-#define RGBLIGHT_SPLIT
-#define RGBLIGHT_EFFECT_BREATHING
-
 /* Enable split usb detect for Sparkfun Pro Micro */
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 1500
@@ -48,6 +41,10 @@
 
 /* Set the maximum time allowed between taps */
 #define TAPPING_TERM 250
+
+/* Configure leader key */
+#define LEADER_TIMEOUT 300
+#define LEADER_PER_KEY_TIMING
 
 /* Allow quick tapping not to trigger modifier hold */
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY

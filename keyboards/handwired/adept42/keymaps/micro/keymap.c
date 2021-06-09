@@ -62,8 +62,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * AS = Alt + Space
    * CE = Ctrl + Enter
    * SS = Super + Space
+   * ACD = Alt + Ctrl + Del
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * |      |  F1  |  F2  |  F3  |  F4  |  SS  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
+   * | ACD  |  F1  |  F2  |  F3  |  F4  |  SS  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |  AS  |  F5  |  F6  |  F7  |  F8  |  CE  |                    | Left | Down |  Up  |Right |VolDn |Pause |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -73,7 +74,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     KC_NO, KC_F1, KC_F2, KC_F3, KC_F4, LGUI(KC_SPC),               KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
+     LCA(KC_DEL), KC_F1, KC_F2, KC_F3, KC_F4, LGUI(KC_SPC),         KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
      LALT(KC_SPC), KC_F5, KC_F6, KC_F7, KC_F8, LCTL(KC_ENT),        KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
      KC_LSFT, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,                 KC_SLCK, KC_PGDN, KC_CAPS, KC_END, KC_MUTE, KC_RSFT, \
                              KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
@@ -194,16 +195,6 @@ void matrix_scan_user(void) {
       unregister_code(KC_LCTL);
       unregister_code(KC_LSFT);
       unregister_code(KC_N);
-    }
-
-    // send alt + ctrl + del
-    SEQ_ONE_KEY(KC_L) {
-      register_code(KC_LALT);
-      register_code(KC_LCTL);
-      register_code(KC_DEL);
-      unregister_code(KC_DEL);
-      unregister_code(KC_LCTL);
-      unregister_code(KC_LALT);
     }
 
     // play dynamic macro 1

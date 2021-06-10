@@ -21,20 +21,22 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * Space = Space when tapped and Super when held
    * Layer2 = Leader key when tapped and layer 2 when held
    * CtlSpc = Space when tapped and Ctrl when held
+   * A = A when tapped and Shift when held
+   * ; = ; when tapped and Shift when held
    * ,-----------------------------------------.                    ,-----------------------------------------.
    * | Esc  |  Q   |  W   |  E   |  R   |  T   |                    |  Y   |  U   |  I   |  O   |  P   | Bspc |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * | Tab  |  A   |  S   |  D   |  F   |  G   |                    |  H   |  J   |  K   |  L   |  ;   |  '   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  Z   |  X   |  C   |  V   |  B   |                    |  N   |  M   |  ,   |  .   |  /   |Shift |
+   * |      |  Z   |  X   |  C   |  V   |  B   |                    |  N   |  M   |  ,   |  .   |  /   |      |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             |CtlSpc|Enter |Layer1|      |Layer2|Space | RAlt |
    *                             `--------------------'      `--------------------'
    */
   [_QWERTY] = LAYOUT( \
      KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, \
-     KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, \
-     KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,                         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, \
+     KC_TAB, LSFT_T(KC_A), KC_S, KC_D, KC_F, KC_G,                  KC_H, KC_J, KC_K, KC_L, RSFT_T(KC_SCLN), KC_QUOT, \
+     KC_NO, KC_Z, KC_X, KC_C, KC_V, KC_B,                         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_NO, \
                     LCTL_T(KC_SPC), LCA_T(KC_ENT), MO(_L1),  TD(LT_LEAD), LGUI_T(KC_SPC), KC_RALT \
   ),
 

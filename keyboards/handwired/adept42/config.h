@@ -31,13 +31,13 @@
 /* Configure pin used for selecting handness */
 #define SPLIT_HAND_PIN F5
 
-/* Enable split usb detect for Sparkfun Pro Micro */
+/* Enable split usb detect for Pro Micro */
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 1500
 #define NO_USB_STARTUP_CHECK
 
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
-#define DEBOUNCE 5
+#define DEBOUNCE 2
 
 /* Set the maximum time allowed between taps */
 #define TAPPING_TERM 250

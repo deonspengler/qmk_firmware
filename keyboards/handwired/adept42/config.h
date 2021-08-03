@@ -40,14 +40,11 @@
 #define DEBOUNCE 2
 
 /* Set the maximum time allowed between taps */
-#define TAPPING_TERM 250
+#define TAPPING_TERM 200
 
 /* Configure leader key */
-#define LEADER_TIMEOUT 300
+#define LEADER_TIMEOUT 200
 #define LEADER_PER_KEY_TIMING
 
 /* Allow quick tapping not to trigger modifier hold */
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
-
-/* Releasing key without pressing another will send the original key */
-#define RETRO_TAPPING

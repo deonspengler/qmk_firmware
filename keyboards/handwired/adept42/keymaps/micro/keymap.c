@@ -16,31 +16,31 @@ enum {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
-   * Qwerty
-   * Enter = Enter when tapped and Alt + Ctrl when held
-   * Space = Space when tapped and Super when held
-   * Layer2 = Leader key when tapped and layer 2 when held
-   * CtlSpc = Space when tapped and Ctrl when held
-   * AltBsp = Backspace when tapped and Alt when held
+   * Layer0 - (Qwerty)
+   * EntrCA = Enter when tapped and Ctrl + Alt when held
+   * SpcSpr = Space when tapped and Super when held
+   * LKLyr2 = Leader key when tapped and layer 2 when held
+   * EscCtl = Escape when tapped and Ctrl when held
+   * BspAlt = Backspace when tapped and Alt when held
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * | Esc  |  Q   |  W   |  E   |  R   |  T   |                    |  Y   |  U   |  I   |  O   |  P   |      |
+   * | ESC  |  Q   |  W   |  E   |  R   |  T   |                    |  Y   |  U   |  I   |  O   |  P   | BSPC |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * | Tab  |  A   |  S   |  D   |  F   |  G   |                    |  H   |  J   |  K   |  L   |  ;   |  '   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |Shift |  Z   |  X   |  C   |  V   |  B   |                    |  N   |  M   |  ,   |  .   |  /   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             |CtlSpc|Enter |Layer1|      |Layer2|Space |AltBsp|
+   *                             |EscCtl|EntrCA|Layer1|      |LKLyr2|SpcSpr|BspAlt|
    *                             `--------------------'      `--------------------'
    */
   [_QWERTY] = LAYOUT( \
-     KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_NO, \
+     KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, \
      KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, \
      KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,                         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, \
-                LCTL_T(KC_SPC), LCA_T(KC_ENT), MO(_L1),      TD(LT_LEAD), LGUI_T(KC_SPC), RALT_T(KC_BSPC) \
+                LCTL_T(KC_ESC), LCA_T(KC_ENT), MO(_L1),      TD(LT_LEAD), LGUI_T(KC_SPC), RALT_T(KC_BSPC) \
   ),
 
   /*
-   * Layer1
+   * Layer1 - (Symbols | Numpad)
    * ,-----------------------------------------.                    ,-----------------------------------------.
    * |  `   |  !   |  @   |  #   |  {   |  }   |                    |  =   |  7   |  8   |  9   |  /   |  -   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -48,7 +48,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |  >   |  \   |  |   |  _   |  [   |  ]   |                    |  ,   |  1   |  2   |  3   |  .   |  <   |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             | LCtl |Enter |L1Held|      |CtlSpc|  0   | RAlt |
+   *                             |CtlEsc|Enter |L1Held|      |CtlSpc|  0   |AltBsp|
    *                             `--------------------'      `--------------------'
    */
   [_L1] = LAYOUT( \
@@ -59,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   /*
-   * Layer2
+   * Layer2 - (F-Keys | Navigation)
    * AS = Alt + Space
    * CE = Ctrl + Enter
    * SS = Super + Space
@@ -82,7 +82,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   /*
-   * Layer3 (Gaming)
+   * Layer3 - (Gaming)
    * ,-----------------------------------------.                    ,-----------------------------------------.
    * | Esc  |  V   |  Q   |  W   |  E   |  R   |                    |      |      |  Up  |      |      |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -101,7 +101,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   /*
-   * Layer4 (RetroArch)
+   * Layer4 - (RetroArch)
    * ,-----------------------------------------.                    ,-----------------------------------------.
    * |  F1  |      |      |  Up  |      |      |                    |      |  A   |  S   |  Q   |  1   |      |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
@@ -239,14 +239,29 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
     case LGUI_T(KC_SPC):
       return true;
+    case RALT_T(KC_BSPC):
+      return true;
     default:
       return false;
   }
 }
 
+bool led_update_user(led_t led_state) {
+  static uint8_t caps_state = 0;
+  static uint8_t msg[RAW_EPSIZE] = {0};
+
+  if (caps_state != led_state.caps_lock) {
+    sprintf((char *)msg, "C:%u", led_state.caps_lock);
+    raw_hid_send(msg, RAW_EPSIZE);
+    caps_state = led_state.caps_lock;
+  }
+
+  return true;
+}
+
 uint32_t layer_state_set_user(uint32_t state) {
   uint8_t layer = biton32(state);
-  uint8_t msg[RAW_EPSIZE] = {0};
+  static uint8_t msg[RAW_EPSIZE] = {0};
 
   sprintf((char *)msg, "L:%u", layer);
   raw_hid_send(msg, RAW_EPSIZE);
@@ -255,19 +270,22 @@ uint32_t layer_state_set_user(uint32_t state) {
 }
 
 void dynamic_macro_record_start_user(void) {
-  uint8_t msg[RAW_EPSIZE] = {0};
+  static uint8_t msg[RAW_EPSIZE] = {0};
+
   sprintf((char *)msg, "M:1");
   raw_hid_send(msg, RAW_EPSIZE);
 }
 
 void dynamic_macro_play_user(int8_t direction) {
-  uint8_t msg[RAW_EPSIZE] = {0};
+  static uint8_t msg[RAW_EPSIZE] = {0};
+
   sprintf((char *)msg, "M:3");
   raw_hid_send(msg, RAW_EPSIZE);
 }
 
 void dynamic_macro_record_end_user(int8_t direction) {
-  uint8_t msg[RAW_EPSIZE] = {0};
+  static uint8_t msg[RAW_EPSIZE] = {0};
+
   sprintf((char *)msg, "M:5");
   raw_hid_send(msg, RAW_EPSIZE);
 }

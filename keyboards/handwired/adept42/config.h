@@ -42,9 +42,9 @@
 /* Set the maximum time allowed between taps */
 #define TAPPING_TERM 200
 
-/* Configure leader key */
-#define LEADER_TIMEOUT 200
-#define LEADER_PER_KEY_TIMING
-
 /* Allow quick tapping not to trigger modifier hold */
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
+
+/* Configure leader key */
+#define LEADER_TIMEOUT 250
+#define LEADER_PER_KEY_TIMING

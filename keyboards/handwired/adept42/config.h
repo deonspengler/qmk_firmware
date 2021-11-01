@@ -45,6 +45,9 @@
 /* Allow quick tapping not to trigger modifier hold */
 #define IGNORE_MOD_TAP_INTERRUPT_PER_KEY
 
+/* Releasing key without pressing another will send the original key */
+#define RETRO_TAPPING_PER_KEY
+
 /* Configure leader key */
 #define LEADER_TIMEOUT 250
 #define LEADER_PER_KEY_TIMING

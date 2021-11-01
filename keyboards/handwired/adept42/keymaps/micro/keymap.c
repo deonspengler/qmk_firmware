@@ -17,8 +17,8 @@ enum {
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /*
    * Layer0 - (Qwerty)
-   * EntrCA = Enter when tapped and Ctrl + Alt when held
-   * SpcSpr = Space when tapped and Super when held
+   * EntSUP = Enter when tapped and Super when held
+   * SpcCA  = Space when tapped and Ctrl + Alt when held
    * LKLyr2 = Leader key when tapped and layer 2 when held
    * EscCtl = Escape when tapped and Ctrl when held
    * BspAlt = Backspace when tapped and Alt when held
@@ -29,14 +29,14 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |Shift |  Z   |  X   |  C   |  V   |  B   |                    |  N   |  M   |  ,   |  .   |  /   |Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             |EscCtl|EntrCA|Layer1|      |LKLyr2|SpcSpr|BspAlt|
+   *                             |EscCtl|EntSUP|Layer1|      |LKLyr2|SpcCA |BspAlt|
    *                             `--------------------'      `--------------------'
    */
   [_QWERTY] = LAYOUT( \
      KC_ESC, KC_Q, KC_W, KC_E, KC_R, KC_T,                          KC_Y, KC_U, KC_I, KC_O, KC_P, KC_BSPC, \
      KC_TAB, KC_A, KC_S, KC_D, KC_F, KC_G,                          KC_H, KC_J, KC_K, KC_L, KC_SCLN, KC_QUOT, \
      KC_LSFT, KC_Z, KC_X, KC_C, KC_V, KC_B,                         KC_N, KC_M, KC_COMM, KC_DOT, KC_SLSH, KC_RSFT, \
-                LCTL_T(KC_ESC), LCA_T(KC_ENT), MO(_L1),      TD(LT_LEAD), LGUI_T(KC_SPC), RALT_T(KC_BSPC) \
+                LCTL_T(KC_ESC), LGUI_T(KC_ENT), MO(_L1),      TD(LT_LEAD), LCA_T(KC_SPC), RALT_T(KC_BSPC) \
   ),
 
   /*
@@ -65,20 +65,20 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * SS = Super + Space
    * ACD = Alt + Ctrl + Del
    * ,-----------------------------------------.                    ,-----------------------------------------.
-   * | ACD  |  F1  |  F2  |  F3  |  F4  |  SS  |                    |PrtScn| PgUp |Insert| Home |VolUp | Del  |
+   * | ACD  |  F1  |  F2  |  F3  |  F4  |  SS  |                    |PrtScn| Home |Insert| PgUp |VolUp | Del  |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |  AS  |  F5  |  F6  |  F7  |  F8  |  CE  |                    | Left | Down |  Up  |Right |VolDn |Pause |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |Shift |  F9  | F10  | F11  | F12  |      |                    |ScrLck| PgD  | Caps | End  |VolMte|Shift |
+   * |Shift |  F9  | F10  | F11  | F12  |      |                    |ScrLck| End  | Caps | PgD  |VolMte|Shift |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
-   *                             | LCtl |Enter | LAlt |      |L2Held|Space | RAlt |
+   *                             | LCtl |CtlAlt| LAlt |      |L2Held|Space | RAlt |
    *                             `--------------------'      `--------------------'
    */
   [_L2] = LAYOUT( \
-     LCA(KC_DEL), KC_F1, KC_F2, KC_F3, KC_F4, LGUI(KC_SPC),         KC_PSCR, KC_PGUP, KC_INS, KC_HOME, KC_VOLU, KC_DEL, \
+     LCA(KC_DEL), KC_F1, KC_F2, KC_F3, KC_F4, LGUI(KC_SPC),         KC_PSCR, KC_HOME, KC_INS, KC_PGUP, KC_VOLU, KC_DEL, \
      LALT(KC_SPC), KC_F5, KC_F6, KC_F7, KC_F8, LCTL(KC_ENT),        KC_LEFT, KC_DOWN, KC_UP, KC_RGHT, KC_VOLD, KC_PAUS, \
-     KC_LSFT, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,                 KC_SLCK, KC_PGDN, KC_CAPS, KC_END, KC_MUTE, KC_RSFT, \
-                             KC_TRNS, KC_TRNS, KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
+     KC_LSFT, KC_F9, KC_F10, KC_F11, KC_F12, KC_NO,                 KC_SLCK, KC_END, KC_CAPS, KC_PGDN, KC_MUTE, KC_RSFT, \
+                       KC_TRNS, LCTL(KC_LALT), KC_LALT,      KC_TRNS, KC_TRNS, KC_TRNS \
   ),
 
   /*
@@ -240,6 +240,15 @@ bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
     case LGUI_T(KC_SPC):
       return true;
     case RALT_T(KC_BSPC):
+      return true;
+    default:
+      return false;
+  }
+}
+
+bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
+  switch (keycode) {
+    case LCA_T(KC_SPC):
       return true;
     default:
       return false;

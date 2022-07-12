@@ -6,7 +6,6 @@
 #define DEVICE_VER      0x0001
 #define MANUFACTURER    Deon Spengler
 #define PRODUCT         Adept42
-#define DESCRIPTION     A 42 key ortholinear, column staggered split keyboard
 
 /* Set polling rate */
 #define USB_POLLING_INTERVAL_MS 1
@@ -34,7 +33,6 @@
 /* Enable split usb detect for Pro Micro */
 #define SPLIT_USB_DETECT
 #define SPLIT_USB_TIMEOUT 1500
-#define NO_USB_STARTUP_CHECK
 
 /* Reduces unintended double presses. Set 0 if debouncing is not needed */
 #define DEBOUNCE 2

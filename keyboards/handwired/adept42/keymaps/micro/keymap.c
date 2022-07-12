@@ -46,7 +46,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
    * |  ~   |  ^   |  &   |  $   |  (   |  )   |                    |  %   |  4   |  5   |  6   |  *   |  +   |
    * |------+------+------+------+------+------|                    |------+------+------+------+------+------|
-   * |  >   |  \   |  |   |  _   |  [   |  ]   |                    |  ,   |  1   |  2   |  3   |  .   |  <   |
+   * |  <   |  \   |  |   |  _   |  [   |  ]   |                    |  ,   |  1   |  2   |  3   |  .   |  >   |
    * `-----------------------------------------|------.      ,------|-----------------------------------------'
    *                             |CtlEsc|Enter |L1Held|      |CtlSpc|  0   |AltBsp|
    *                             `--------------------'      `--------------------'
@@ -54,7 +54,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_L1] = LAYOUT( \
      KC_GRV, KC_EXLM, KC_AT, KC_HASH, KC_LCBR, KC_RCBR,             KC_EQL, KC_7, KC_8, KC_9, KC_SLSH, KC_MINS, \
      KC_TILD, KC_CIRC, KC_AMPR, KC_DLR, KC_LPRN, KC_RPRN,           KC_PERC, KC_4, KC_5, KC_6, KC_PAST, KC_PPLS, \
-     KC_GT, KC_BSLS, KC_PIPE, KC_UNDS, KC_LBRC, KC_RBRC,            KC_COMM, KC_1, KC_2, KC_3, KC_PDOT, KC_LT, \
+     KC_LT, KC_BSLS, KC_PIPE, KC_UNDS, KC_LBRC, KC_RBRC,            KC_COMM, KC_1, KC_2, KC_3, KC_PDOT, KC_GT, \
                              KC_TRNS, KC_TRNS, KC_TRNS,      RCTL_T(KC_SPC), KC_0, KC_TRNS \
   ),
 

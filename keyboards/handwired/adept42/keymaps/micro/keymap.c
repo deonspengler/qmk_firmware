@@ -237,6 +237,8 @@ void matrix_scan_user(void) {
 
 bool get_ignore_mod_tap_interrupt(uint16_t keycode, keyrecord_t *record) {
   switch (keycode) {
+    case LGUI_T(KC_ENT):
+      return true;
     case LCA_T(KC_SPC):
       return true;
     case RALT_T(KC_BSPC):
@@ -300,5 +302,5 @@ void dynamic_macro_record_end_user(int8_t direction) {
 }
 
 void raw_hid_receive(uint8_t *data, uint8_t length) {
-  //raw_hid_send(data, length);
+  raw_hid_send(data, length);
 }
